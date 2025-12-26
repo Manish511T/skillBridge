@@ -34,7 +34,20 @@ export const register = async (req, res)=>{
     });
 };
 
-const login = async(req, res)=>{
+export const login = async(req, res)=>{
     const {email, password} = req.body;
-    
-}
+
+    const user = await User.findOne({email});
+    if(!user) return res.status(400).json({message:"Invalid credential"});
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if(!isMatch) return res.status(400).json({message:"Invalid credential"});
+
+    if(!user.isApproved){
+        return res.status(403).json({message:"Instructor not approved yet"});
+    }
+
+    res.json({
+        token: generateToken(user._id),
+    });
+};
