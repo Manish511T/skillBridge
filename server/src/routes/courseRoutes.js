@@ -11,7 +11,7 @@ import {
 const router = express.Router();
 
 router.get("/", getPublishedCourses); //for public
-router.post("/", authMiddleWare, allowRoles("instructor",createCourse));
+router.post("/", authMiddleWare, allowRoles("instructor"),createCourse);
 router.put("/:id", authMiddleWare, allowRoles("instructor"), updateCourse);
 router.delete("/:id", authMiddleWare, allowRoles("instructor"), deleteCourse);
 

@@ -32,7 +32,7 @@ export const updateCourse = async (req, res) => {
         return res.status(404).json({message:"Course not found"});
     }
 
-    if(course.instructor.toString() !== req.user.id.toString()){
+    if(course.instructor.toString() !== req.user._id.toString()){
         return res.status(403).json({message:"Not course owner"});
     }
 
@@ -41,6 +41,7 @@ export const updateCourse = async (req, res) => {
     course.isPublished = req.body.isPublished !== undefined ? req.body.isPublished : course.isPublished;
 
     await course.save();
+    res.json(course)
 };
 
 export const deleteCourse = async (req, res)=>{
