@@ -17,7 +17,7 @@ export const createCourse = async (req, res)=>{
 }
 
 
-export const getPublishedCourse = async(req, res)=>{
+export const getPublishedCourses = async(req, res)=>{
     const course = await Course.find({isPublished:true}).populate(
         "instructor",
         "name"
