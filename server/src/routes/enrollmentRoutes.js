@@ -9,6 +9,6 @@ import {
 const router = express.Router();
 
 router.post("/:courseId", authMiddleware, allowRoles("student"), enrollInCourse);
-router.get("/my-course", authMiddleware, allowRoles("student"), getMyEnrollments);
+router.get("/my-courses", authMiddleware, allowRoles("student"), getMyEnrollments);
 
 export default router;
