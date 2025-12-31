@@ -5,6 +5,9 @@ import instructorRoutes from "./routes/instructorRoutes.js"
 import adminRoutes from "./routes/adminRoutes.js";
 import courseRoutes from "./routes/courseRoutes.js";
 import enrollmentRoutes from "./routes/enrollmentRoutes.js";
+import lessonRoutes from "./routes/lessonRoutes.js";
+import progressRoutes from "./routes/progressRoutes.js";
+
 const app = express();
 
 app.use(cors());
@@ -15,6 +18,8 @@ app.use("/api/instructor", instructorRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/courses", courseRoutes);
 app.use("/api/enrollments", enrollmentRoutes);
+app.use("/api/lessons", lessonRoutes);
+app.use("/api/progress", progressRoutes);
 
 app.get("/", (req, res )=>{
     res.send("SkillBridge API running");
