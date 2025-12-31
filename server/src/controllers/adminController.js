@@ -14,15 +14,24 @@ export const getPendingInstructors = async(req, res)=>{
     res.json(instructors);
 }
 
-export const approveInstructor = async (res, req)=>{
-    const user = await User.findById(req.params.id);
-    
-    if(!user || user.role !== "instructor"){
-        return res.status(404).json({message:"Instructor not found"});
-    }
+export const approveInstructor = async (req, res) => {
+  if (!req.params || !req.params.id) {
+    return res.status(400).json({ message: "Instructor ID missing" });
+  }
 
-    user.isApproved = true;
-    await user.save();
-    
-    res.json({message:"Instructor approved"});
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    return res.status(404).json({ message: "Instructor not found" });
+  }
+
+  if (user.role !== "instructor") {
+    return res.status(400).json({ message: "User is not an instructor" });
+  }
+
+  user.isApproved = true;
+  await user.save();
+
+  res.json({ message: "Instructor approved successfully" });
 };
+
