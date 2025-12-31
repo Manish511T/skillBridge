@@ -7,12 +7,13 @@ import {
     updateCourse,
     deleteCourse
 } from "../controllers/courseController.js";
+import approvedInstructor from "../middlewares/approvedInstructor.js";
 
 const router = express.Router();
 
 router.get("/", getPublishedCourses); //for public
-router.post("/", authMiddleWare, allowRoles("instructor"),createCourse);
-router.put("/:id", authMiddleWare, allowRoles("instructor"), updateCourse);
+router.post("/", authMiddleWare, allowRoles("instructor"),approvedInstructor, createCourse);
+router.put("/:id", authMiddleWare, allowRoles("instructor"),approvedInstructor, updateCourse);
 router.delete("/:id", authMiddleWare, allowRoles("instructor"), deleteCourse);
 
 export default router;
