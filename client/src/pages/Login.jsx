@@ -2,6 +2,7 @@ import { useState } from "react";
 import AuthLayout from "../components/AuthLayout";
 import { Link } from "react-router-dom";
 import { loginUser } from "../services/authService";
+import { useAuth } from "../context/AuthContext";
 
 
 const Login = () => {
@@ -11,6 +12,7 @@ const Login = () => {
     })
 
     const [error, setError] = useState("");
+    const {login} = useAuth();
 
     const submit = async (e) => {
         e.preventDefault();
@@ -23,7 +25,8 @@ const Login = () => {
 
         try{
             const response = await loginUser(form);
-            console.log("LOGIN SUCCESS:", response);
+            login(response);
+            console.log("USER STORED:", response.user);
         }catch(error){
             setError(error.message);
         }
