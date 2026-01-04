@@ -1,44 +1,53 @@
 import { useState } from "react";
 import AuthLayout from "../components/AuthLayout";
+import { Link } from "react-router-dom";
+
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-  const submit = (e) => {
-    e.preventDefault();
+    const submit = (e) => {
+        e.preventDefault();
 
-    console.log("LOGIN DATA:", {
-      email,
-      password,
-    });
-  };
+        console.log("LOGIN DATA:", {
+            email,
+            password,
+        });
+    };
 
-  return (
-    <AuthLayout title="Login">
-      <form onSubmit={submit} className="space-y-4">
-        <input
-          type="email"
-          placeholder="Email"
-          className="w-full border p-2 rounded"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+    return (
+        <AuthLayout title="Login">
+            <form onSubmit={submit} className="space-y-4">
+                <input
+                    type="email"
+                    placeholder="Email"
+                    className="w-full border p-2 rounded"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
 
-        <input
-          type="password"
-          placeholder="Password"
-          className="w-full border p-2 rounded"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+                <input
+                    type="password"
+                    placeholder="Password"
+                    className="w-full border p-2 rounded"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
 
-        <button className="w-full bg-indigo-600 text-white py-2 rounded">
-          Login
-        </button>
-      </form>
-    </AuthLayout>
-  );
+                <button className="w-full bg-indigo-600 text-white py-2 rounded">
+                    Login
+                </button>
+            </form>
+            <p className="text-sm text-center mt-4">
+                Don't have an account?{" "}
+                <Link to="/register" className="text-indigo-600 font-medium">
+                    Register
+                </Link>
+            </p>
+
+        </AuthLayout>
+    );
 };
 
 export default Login;
