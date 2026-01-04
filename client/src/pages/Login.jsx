@@ -1,6 +1,7 @@
 import { useState } from "react";
 import AuthLayout from "../components/AuthLayout";
 import { Link } from "react-router-dom";
+import { loginUser } from "../services/authService";
 
 
 const Login = () => {
@@ -11,7 +12,7 @@ const Login = () => {
 
     const [error, setError] = useState("");
 
-    const submit = (e) => {
+    const submit = async (e) => {
         e.preventDefault();
         setError("");
 
@@ -20,8 +21,13 @@ const Login = () => {
             return;
         }
 
-        console.log("LOGIN DATA:", form);
-    }
+        try{
+            const response = await loginUser(form);
+            console.log("LOGIN SUCCESS:", response);
+        }catch(error){
+            setError(error.message);
+        }
+    };
 
     return (
         <AuthLayout title="Login">
