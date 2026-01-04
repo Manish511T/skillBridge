@@ -4,35 +4,51 @@ import { Link } from "react-router-dom";
 
 
 const Login = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [form, setForm] = useState({
+        email: "",
+        password: "",
+    })
+
+    const [error, setError] = useState("");
 
     const submit = (e) => {
         e.preventDefault();
+        setError("");
 
-        console.log("LOGIN DATA:", {
-            email,
-            password,
-        });
-    };
+        if (!form.email || !form.password) {
+            setError("Email and password are required");
+            return;
+        }
+
+        console.log("LOGIN DATA:", form);
+    }
 
     return (
         <AuthLayout title="Login">
             <form onSubmit={submit} className="space-y-4">
+                {error && (
+                    <p className="text-red-600 text-sm text-center">
+                        {error}
+                    </p>
+                )}
                 <input
                     type="email"
                     placeholder="Email"
                     className="w-full border p-2 rounded"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={form.email}
+                    onChange={
+                        (e) => setForm({ ...form, email: e.target.value })
+                    }
                 />
 
                 <input
                     type="password"
                     placeholder="Password"
                     className="w-full border p-2 rounded"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    value={form.password}
+                    onChange={
+                        (e) => setForm({ ...form, password: e.target.value })
+                    }
                 />
 
                 <button className="w-full bg-indigo-600 text-white py-2 rounded">
