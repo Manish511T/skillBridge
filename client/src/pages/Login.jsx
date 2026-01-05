@@ -3,6 +3,7 @@ import AuthLayout from "../components/AuthLayout";
 import { Link } from "react-router-dom";
 import { loginUser } from "../services/authService";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 
 const Login = () => {
@@ -13,6 +14,8 @@ const Login = () => {
 
     const [error, setError] = useState("");
     const {login} = useAuth();
+    const navigate = useNavigate();
+
 
     const submit = async (e) => {
         e.preventDefault();
@@ -25,8 +28,10 @@ const Login = () => {
 
         try{
             const response = await loginUser(form);
+            // console.log("LOGIN API RESPONSE:", response);
             login(response);
-            console.log("USER STORED:", response.user);
+            navigate("/dashboard")
+            // console.log("USER STORED:", response.user);
         }catch(error){
             setError(error.message);
         }
