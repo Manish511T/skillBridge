@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import AuthLayout from "../components/AuthLayout";
-
 const Register = () => {
   const [form, setForm] = useState({
     name: "",
@@ -10,6 +9,7 @@ const Register = () => {
   });
 
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const submit = (e) => {
     e.preventDefault();
@@ -24,7 +24,7 @@ const Register = () => {
       setError("Password must be at least 6 characters");
       return;
     }
-
+    navigate("/login")
     console.log("REGISTER DATA:", form);
   };
 
