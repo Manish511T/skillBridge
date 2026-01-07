@@ -58,3 +58,12 @@ export const deleteCourse = async (req, res)=>{
     await course.deleteOne();
     res.json({message:"Course deleted"});
 }
+
+
+export const getMyCourses = async(req, res)=>{
+    const courses = await Course.find({
+        instructor:req.user._id,
+    });
+
+    res.json(courses);
+};
