@@ -1,20 +1,23 @@
 import { useAuth } from "../context/AuthContext";
+import StudentDashboard from "./StudentDashboard";
+import InstructorDashboard from "./InstructorDashboard";
+import AdminDashboard from "./AdminDashboard";
 
 const Dashboard = () => {
   const { user } = useAuth();
 
-  return (
-    <div style={{ padding: "20px" }}>
-      <h1>Dashboard</h1>
+  if (!user) return null;
 
-      <p>
-        You are logged in as <strong>{user?.name}</strong>
-      </p>
-
-      <p>Email: {user?.email}</p>
-      <p>Role: {user?.role}</p>
-    </div>
-  );
+  switch (user.role) {
+    case "student":
+      return <StudentDashboard />;
+    case "instructor":
+      return <InstructorDashboard />;
+    case "admin":
+      return <AdminDashboard />;
+    default:
+      return <p>Unknown role</p>;
+  }
 };
 
 export default Dashboard;
