@@ -1,17 +1,20 @@
 import { useState } from "react";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthLayout from "../components/AuthLayout";
+import { registerUser } from "../services/authService";
+
 const Register = () => {
   const [form, setForm] = useState({
     name: "",
     email: "",
     password: "",
+    role: "student",
   });
 
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
     setError("");
 
@@ -24,8 +27,13 @@ const Register = () => {
       setError("Password must be at least 6 characters");
       return;
     }
-    navigate("/login")
-    console.log("REGISTER DATA:", form);
+
+    try {
+      await registerUser(form);
+      navigate("/login");
+    } catch (err) {
+      setError(err.message || "Registration failed");
+    }
   };
 
   return (
@@ -63,8 +71,7 @@ const Register = () => {
                   setForm({ ...form, name: e.target.value })
                 }
                 className="w-full rounded-lg border border-gray-300 px-4 py-2.5
-                  focus:outline-none focus:ring-2 focus:ring-indigo-500
-                  transition"
+                  focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
               />
             </div>
 
@@ -81,8 +88,7 @@ const Register = () => {
                   setForm({ ...form, email: e.target.value })
                 }
                 className="w-full rounded-lg border border-gray-300 px-4 py-2.5
-                  focus:outline-none focus:ring-2 focus:ring-indigo-500
-                  transition"
+                  focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
               />
             </div>
 
@@ -99,9 +105,26 @@ const Register = () => {
                   setForm({ ...form, password: e.target.value })
                 }
                 className="w-full rounded-lg border border-gray-300 px-4 py-2.5
-                  focus:outline-none focus:ring-2 focus:ring-indigo-500
-                  transition"
+                  focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
               />
+            </div>
+
+            {/* 🔑 ROLE SELECTION */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Register as
+              </label>
+              <select
+                value={form.role}
+                onChange={(e) =>
+                  setForm({ ...form, role: e.target.value })
+                }
+                className="w-full rounded-lg border border-gray-300 px-4 py-2.5
+                  focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+              >
+                <option value="student">Student</option>
+                <option value="instructor">Instructor</option>
+              </select>
             </div>
 
             {/* Button */}
